@@ -1,6 +1,5 @@
 package com.lisnenko.tasktracker.rest;
 
-import com.lisnenko.tasktracker.dao.EmployeeDAO;
 import com.lisnenko.tasktracker.entity.Employee;
 import com.lisnenko.tasktracker.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
