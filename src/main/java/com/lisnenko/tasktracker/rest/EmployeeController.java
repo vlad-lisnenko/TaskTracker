@@ -3,28 +3,86 @@ package com.lisnenko.tasktracker.rest;
 
 import com.lisnenko.tasktracker.entity.Employee;
 import com.lisnenko.tasktracker.service.EmployeeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Date;
 
-@RestController
-@RequestMapping("/api")
-public class EmployeeRestController {
+@Controller
+@RequestMapping("/employees")
+public class EmployeeController {
 
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
-    @Autowired
-    public EmployeeRestController(EmployeeService theEmployeeService) {
+    public EmployeeController(EmployeeService theEmployeeService) {
         employeeService = theEmployeeService;
     }
 
-    // expose "/employees" and return a list of employees
-    @GetMapping("/employees")
-    public List<Employee> findAll() {
-        return employeeService.findAll();
+    @GetMapping("/hello")
+    public String helloWorld(Model model) {
+
+        model.addAttribute("time", new Date());
+
+        return "helloworld";
     }
 
+
+    // expose "/employees" and return a list of employees
+    @GetMapping("/list")
+    public String findAll(Model model) {
+
+        model.addAttribute("employees", employeeService.findAll());
+
+        return "employees/employee-list";
+    }
+
+    @GetMapping("/showFormForAdd")
+    public String showFormForAdd(Model model) {
+
+        //Create model attribute to bind form data
+        Employee employee = new Employee();
+
+        model.addAttribute("employee", employee);
+
+        return "employees/employee-form";
+    }
+
+    @GetMapping("/showFormForUpdate")
+    public String showFormForUpdate(@RequestParam("employeeId") int id, Model model) {
+
+        // get the employee from the service
+        Employee employee = employeeService.findById(id);
+
+        // set employee in the model to prepopulate the form
+        model.addAttribute("employee", employee);
+
+        // sen over to our form
+
+
+        return "employees/employee-form";
+    }
+
+
+    @PostMapping("/save")
+    public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+
+        // save the employee
+        employeeService.save(employee);
+
+        // use a redirect to prevent duplicate submissions
+        return "redirect:/employees/list";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam("employeeId") int id) {
+
+        // delete the employee
+        employeeService.deleteById(id);
+
+        // redirect to the /employee/list
+        return "redirect:/employees/list";
+    }
     // add mapping for GET /employees/{employeeId}
 
     @GetMapping("/employees/{employeeId}")
