@@ -1,4 +1,4 @@
-package com.lisnenko.tasktracker.rest;
+package com.lisnenko.tasktracker.controller;
 
 
 import com.lisnenko.tasktracker.entity.Employee;
@@ -19,23 +19,26 @@ public class EmployeeController {
         employeeService = theEmployeeService;
     }
 
-    @GetMapping("/hello")
-    public String helloWorld(Model model) {
 
-        model.addAttribute("time", new Date());
-
-        return "helloworld";
-    }
-
-
-    // expose "/employees" and return a list of employees
-    @GetMapping("/list")
+    @GetMapping("/")
     public String findAll(Model model) {
 
         model.addAttribute("employees", employeeService.findAll());
 
         return "employees/employee-list";
     }
+
+    @GetMapping("/leaders")
+    public String showLeaders() {
+        return "leaders";
+    }
+
+    @GetMapping("/systems")
+    public String showSystems() {
+        return "systems";
+    }
+
+    // expose "/employees" and return a list of employees
 
     @GetMapping("/showFormForAdd")
     public String showFormForAdd(Model model) {
@@ -71,7 +74,7 @@ public class EmployeeController {
         employeeService.save(employee);
 
         // use a redirect to prevent duplicate submissions
-        return "redirect:/employees/list";
+        return "redirect:/employees";
     }
 
     @GetMapping("/delete")
@@ -81,7 +84,7 @@ public class EmployeeController {
         employeeService.deleteById(id);
 
         // redirect to the /employee/list
-        return "redirect:/employees/list";
+        return "redirect:/employees";
     }
     // add mapping for GET /employees/{employeeId}
 

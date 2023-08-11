@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -18,11 +19,46 @@
     <h3>Employee Directory</h3>
     <hr>
 
-    <!--  Add a button  -->
-    <a th:href="@{/employees/showFormForAdd}"
-        class="btn btn-primary btn-sm mb-3  ">
-        Add Employee
-    </a>
+    <p>
+        User: <span sec:authentication="principal.username"></span>
+        <br><br>
+        Role(s): <span sec:authentication="principal.authorities"></span>
+    </p>
+    <hr>
+
+    <div sec:authorize="hasRole('MANAGER')">
+        <p>
+            <a th:href="@{/employees/leaders}">Leadership Meeting</a>
+            (only for Manager peeps)
+        </p>
+    </div>
+
+    <div sec:authorize="hasRole('ADMIN')">
+        <p>
+            <a th:href="@{/employees/systems}">Admin Meeting</a>
+            (only for admin peeps)
+        </p>
+    </div>
+
+
+
+    <hr>
+
+    <div class="d-grid gap-2 d-md-block">
+
+        <!--  Add a button  -->
+        <a th:href="@{/employees/showFormForAdd}"
+           class="btn btn-primary btn-sm mb-3  ">
+            Add Employee
+        </a>
+
+
+        <form action="#" th:action="@{/logout}" method="post">
+            <button class="btn btn-outline-dark btn-sm mb-3" type="submit">Logout</button>
+        </form>
+
+    </div>
+
 
     <table class="table table-bordered table-striped">
         <thead class="table-dark">

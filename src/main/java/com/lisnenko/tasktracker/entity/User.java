@@ -1,10 +1,17 @@
 package com.lisnenko.tasktracker.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Collection;
+import java.util.List;
 
 @Entity
-@Table(name = "user")
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class User {
 
     @Id
@@ -21,6 +28,14 @@ public class User {
     @Column(name = "enabled")
     private boolean enabled;
 
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "email")
+    private String email;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "users_roles",
@@ -28,71 +43,21 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
 
-    public User() {
-    }
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> tasks;
 
-    public User(String userName, String password, boolean enabled) {
-        this.userName = userName;
-        this.password = password;
-        this.enabled = enabled;
-    }
+//    public User(String userName, String password, boolean enabled) {
+//        this.userName = userName;
+//        this.password = password;
+//        this.enabled = enabled;
+//    }
+//
+//    public User(String userName, String password, boolean enabled,
+//                Collection<Role> roles) {
+//        this.userName = userName;
+//        this.password = password;
+//        this.enabled = enabled;
+//        this.roles = roles;
+//    }
 
-    public User(String userName, String password, boolean enabled,
-                Collection<Role> roles) {
-        this.userName = userName;
-        this.password = password;
-        this.enabled = enabled;
-        this.roles = roles;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Collection<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", enabled=" + enabled +
-                ", roles=" + roles +
-                '}';
-    }
 }

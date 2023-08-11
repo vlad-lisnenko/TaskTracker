@@ -5,4 +5,6 @@ import com.lisnenko.tasktracker.entity.User;
 public interface UserDao {
 
     User findByUserName(String userName);
+
+    void save(User theUser);
 }

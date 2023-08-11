@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Tracker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="centered-block ">
+        <div class="login-box p-4 border rounded shadow">
+            <h2 class="text-center">Sign in</h2>
+            <form action="#" th:action="@{/authenticateTheUser}" method="post" class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-xs-15">
+                        <div>
+                            <!-- Check for login error -->
+                            <div th:if="${param.error}">
+                                <div class="alert alert-danger col-xs-offset-1 col-xs-10">
+                                    Invalid username or password.
+                                </div>
+                            </div>
+<!--                            <div th:if="${param.logout}">-->
+<!--                                <div class="alert alert-success col-xs-offset-1 col-xs-10">-->
+<!--                                    You have been logged out-->
+<!--                                </div>-->
+<!--                            </div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="username">Login:</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter your login">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter you password">
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-success btn-block">Login</button>
+                    <a th:href="@{/register/showRegistrationForm}"
+                       class="btn btn-primary  btn-block mt-3"
+                       aria-pressed="true">Sign up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

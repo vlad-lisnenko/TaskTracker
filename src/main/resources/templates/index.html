@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Tracker!</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header class="jumbotron">
+  <h1 class="display-4 text-center">Ласкаво просимо до проекту Task Tracker!</h1>
+</header>
+<main class="container-fluid" >
+    <div class="text-center">
+      <div th:if="${registrationSuccess}" class="container mt-3">
+        <div class="alert alert-success te  xt-center" role="alert">
+          Ви успішно зареєстровані! Тепер можете увійти до свого облікового запису.
+        </div>
+      </div>
+      <p>Привіт!</p>
+      <p>Це моя власна веб-сторінка для відстеження завдань (Task Tracker).</p>
+      <p>Тут ви зможете додавати, переглядати, редагувати та видаляти задачі.</p>
+      <p>Дякую за ваш інтерес та час!</p>
+      <div>
+        <a th:href="@{/employees/}" class="btn btn-success btn-md" >Log in</a>
+        <a th:href="@{/register/showRegistrationForm}" class="btn btn-primary btn-md">Sign up</a>
+      </div>
+    </div>
+</main>
+<footer class="text-center py-3 fixed-bottom">
+  <p>© 2023. Усі права захищені.</p>
+</footer>
+</body>
+</html>
